@@ -17,11 +17,10 @@
 
 ### 🚀 Demo (Input vs Output)
 
-<div align="center">
-  <video src="./assets/demo_input.mp4" width="400" autoplay loop muted playsinline></video>
-  <video src="./assets/demo_output.mp4" width="400" autoplay loop muted playsinline></video>
-  <p><em>단일 RGB 카메라 영상 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 자동 생성된 FBX (Blender 렌더링)</em></p>
-</div>
+| 원본 비디오 (Input) | 3D 모션 캡처 결과 (Output) |
+|:---:|:---:|
+| <img src="./assets/demo_input.gif" height="300"/> | <img src="./assets/demo_output.gif" height="300"/> |
+| *단일 RGB 카메라 영상* | *자동 생성된 FBX (Blender 렌더링)* |
 
 ---
 
