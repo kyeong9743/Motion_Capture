@@ -17,11 +17,9 @@
 
 ### 🚀 Demo (Input vs Output)
 
-### 🚀 Demo (Input vs Output)
-
 <div align="center">
-  <video src="https://github.com/kyeong9743/Motion_Capture/raw/main/assets/demo_input.mp4" width="400" autoplay loop muted playsinline></video>
-  <video src="https://github.com/kyeong9743/Motion_Capture/raw/main/assets/demo_output.mp4" width="400" autoplay loop muted playsinline></video>
+  <video src="./assets/demo_input.mp4" width="400" autoplay loop muted playsinline></video>
+  <video src="./assets/demo_output.mp4" width="400" autoplay loop muted playsinline></video>
   <p><em>단일 RGB 카메라 영상 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 자동 생성된 FBX (Blender 렌더링)</em></p>
 </div>
 
