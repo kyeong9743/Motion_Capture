@@ -17,20 +17,13 @@
 
 ### 🚀 Demo (Input vs Output)
 
-<table>
-  <tr>
-    <th align="center">원본 비디오 (Input)</th>
-    <th align="center">3D 모션 캡처 결과 (Output)</th>
-  </tr>
-  <tr>
-    <td align="center"><video src="./assets/demo_input.mp4" width="350" autoplay loop muted playsinline></video></td>
-    <td align="center"><video src="./assets/demo_output.mp4" width="350" autoplay loop muted playsinline></video></td>
-  </tr>
-  <tr>
-    <td align="center"><em>단일 RGB 카메라 영상</em></td>
-    <td align="center"><em>자동 생성된 FBX (Blender 렌더링)</em></td>
-  </tr>
-</table>
+### 🚀 Demo (Input vs Output)
+
+<div align="center">
+  <video src="https://github.com/kyeong9743/Motion_Capture/raw/main/assets/demo_input.mp4" width="400" autoplay loop muted playsinline></video>
+  <video src="https://github.com/kyeong9743/Motion_Capture/raw/main/assets/demo_output.mp4" width="400" autoplay loop muted playsinline></video>
+  <p><em>단일 RGB 카메라 영상 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 자동 생성된 FBX (Blender 렌더링)</em></p>
+</div>
 
 ---
 
