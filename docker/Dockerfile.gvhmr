@@ -1,0 +1,62 @@
+# =============================================================================
+# RTX 5070 (Blackwell / sm_120)에서 GVHMR 실행
+# -----------------------------------------------------------------------------
+# 업스트림 requirements.txt는 torch==2.3.0+cu121과 cu121 pytorch3d 휠을 고정한다.
+# 이들은 Blackwell(sm_120)에서 동작하지 않는다. CUDA 12.8 + PyTorch 2.7로
+# 오버라이드하고 pytorch3d를 소스에서 빌드한다. DPVO는 MVP에서 의도적으로 스킵한다.
+# =============================================================================
+FROM nvidia/cuda:12.8.1-cudnn-devel-ubuntu22.04
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    # CUDA 소스 빌드(pytorch3d)를 위한 Blackwell 아키텍처:
+    TORCH_CUDA_ARCH_LIST="12.0" \
+    FORCE_CUDA=1
+
+# --- 시스템 의존성 ---
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      python3.10 python3.10-dev python3-pip python3-tk \
+      git wget curl ffmpeg ninja-build build-essential \
+      libgl1 libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/* \
+    && ln -sf /usr/bin/python3.10 /usr/bin/python
+
+RUN python -m pip install --upgrade "pip" "setuptools==69.5.1" "wheel"
+
+WORKDIR /app
+
+# --- 1) Blackwell용 PyTorch (cu128) ---
+RUN pip install torch==2.7.1 torchvision==0.22.1 \
+      --index-url https://download.pytorch.org/whl/cu128
+
+# --- 2) numpy 낮은 버전 고정: chumpy가 제거된 별칭(np.bool)을 사용하므로 <1.24 필요 ---
+RUN pip install "numpy==1.23.5"
+
+# --- 3) pytorch3d 소스 빌드 (pyt2.7/cu128용 프리빌트 휠 없음). 느린 빌드. ---
+# --no-build-isolation: pytorch3d의 setup.py가 빌드 시 torch를 import하므로,
+# 1단계에서 설치한 torch를 빌드 환경이 참조해야 한다 (격리된 빌드 환경에는 torch가 없다).
+# MAX_JOBS는 병렬 nvcc를 제한하여 WSL에서 OOM-kill을 방지한다 (각 CUDA 유닛이
+# 2-4GB 피크; 32쓰레드 CPU에서 제한 없이 빌드하면 WSL RAM을 초과한다).
+ENV MAX_JOBS=4
+RUN pip install --no-build-isolation "fvcore" "iopath" && \
+    pip install --no-build-isolation "git+https://github.com/facebookresearch/pytorch3d.git@stable"
+
+# --- 4) chumpy (SMPL .pkl 바디 모델 언픽클에 필요) ---
+# chumpy의 setup.py가 `import pip`을 수행하는데, pip의 격리된 빌드 환경에서는
+# 실패한다 (No module named 'pip'). --no-build-isolation은 pip이 import 가능한
+# 메인 환경에서 setup.py를 실행한다. master는 최신 pip API(ir.requirement)를 처리하므로 사용한다.
+RUN pip install --no-build-isolation "git+https://github.com/mattloper/chumpy.git"
+
+# --- 5) 나머지 GVHMR 의존성, 이미 설치된 것 제외 ---
+COPY GVHMR-main/requirements.txt /tmp/requirements.txt
+RUN grep -viE '^(torch==|torchvision==|pytorch3d|numpy==|chumpy|--extra-index-url)' \
+      /tmp/requirements.txt > /tmp/req.trimmed.txt && \
+    pip install -r /tmp/req.trimmed.txt
+
+# GVHMR 소스 + inputs/outputs는 런타임에 바인드 마운트된다 (compose 참조).
+# 첫 컨테이너 시작 시 엔트리포인트를 통해 editable로 설치한다.
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["sleep", "infinity"]

@@ -1,0 +1,41 @@
+# ---- 서드파티 업스트림 레포 (별도 클론/다운로드 필요 — INSTALL.md 참조) ----
+# 대용량(GB 단위 체크포인트)이며 자체 (비상업적) 라이선스를 보유한다
+GVHMR-main/
+SMPLer-X-main/
+SMPLest-X/
+SMPL_python_v.1.1.0/
+
+# ---- 라이선스 바디 모델 — SMPL-X 약관상 재배포 금지 ----
+models/
+
+# ---- 런타임 데이터: 업로드 영상 + 작업별 출력 ----
+data/
+
+# ---- 프론트엔드 빌드 산출물 / 의존성 ----
+frontend/.next/
+frontend/node_modules/
+frontend/out/
+
+# ---- 파이썬 ----
+__pycache__/
+*.pyc
+.venv/
+
+# ---- 모델 / 미디어 바이너리 (트리 전체 안전망) ----
+*.pth
+*.pth.tar
+*.ckpt
+*.pt
+*.npz
+*.fbx
+*.glb
+*.mp4
+*.avi
+*.mov
+
+# ---- 로컬 도구 상태 ----
+.claude/settings.local.json
+.DS_Store
+Thumbs.db
+.vscode
+.idea
